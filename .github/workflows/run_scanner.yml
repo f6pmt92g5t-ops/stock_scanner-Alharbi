@@ -1,0 +1,31 @@
+name: Stock Scanner
+
+on:
+  schedule:
+    # يشتغل كل ساعة خلال وقت تداول السوق الأمريكي (9:30ص - 4:00م بتوقيت شرق أمريكا)
+    # ملاحظة: التوقيت بالأسفل مضبوط بتوقيت UTC القياسي (EST). في وقت التوقيت الصيفي (EDT)
+    # سيعمل مبكر بساعة عن الافتتاح الفعلي - هذا طبيعي ولا يحتاج تعديل يدوي.
+    - cron: '0 14-21 * * 1-5'
+  workflow_dispatch: {}   # يسمح لك بتشغيله يدويًا من تبويب Actions
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scanner
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scanner.py
