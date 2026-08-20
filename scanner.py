@@ -17,7 +17,7 @@ from datetime import datetime
 CLAUDE_API_KEY = os.environ.get("CLAUDE_API_KEY")
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
-TWELVE_DATA_API_KEY = os.environ.get("TWELVE_DATA_API_KEY")
+TWELVE_DATA_API_KEY = os.environ.get("finnhub_API_KEY")
 
 CLAUDE_MODEL = "claude-sonnet-4-5"
 
